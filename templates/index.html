@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container my-3">
+    <h3>Add a Todo</h3>
+   
+
+    <form name="todoForm" action="/" method="POST"   onsubmit="handleSubmit(event)">
+        <div class="mb-3">
+            <label for="title">Todo Title</label>
+            <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" required >
+        </div>
+        <div class="mb-3">
+            <label for="desc">Description</label>
+            <input type="text" class="form-control" name="desc" id="desc" required>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+<div class="container">
+    <br>
+    <h2>Your Todos</h2>
+    {% if allTodo|length == 0 %}
+        <div class="alert alert-dark" role="alert">
+            No Todos Found. Add Your First Todo....
+        </div>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">SlNo</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date Time</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {% for todo in allTodo %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ todo.title }}</td>
+                    <td>{{ todo.desc }}</td>
+                    <td>{{ todo.date_created }}</td>
+                    <td>
+                        <a href="/edit/{{ todo.sno }}" class="btn btn-outline-primary btn-sm mx-1">Edit</a>
+                        <a href="/delete/{{ todo.sno }}" class="btn btn-outline-danger btn-sm mx-1">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
